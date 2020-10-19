@@ -1,0 +1,14 @@
+# Python
+.coverage
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+# Virtual environment folder
+.venv
+
+# VSCode repo settings
+.vscode
+
+# Answers
+src/answers_analyse_order.py
