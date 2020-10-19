@@ -52,7 +52,7 @@ def items_that_was_not_asked(customer, data, all_items, *, column):
 def save_log(data):
     with open("data/mkt_campaign.txt", "w") as txt_file:
         for line in data:
-            txt_file.write(f'{str(line)} \n')
+            txt_file.write(f'{line}\n')
 
 
 def analyse_log(path_to_file):
