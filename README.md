@@ -12,9 +12,9 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
 
 1. Clone o repositório
 
-- `git clone git@github.com:tryber/sd-0x-restaurant-orders.git`.
+- `git clone git@github.com:tryber/sd-02-restaurant-orders.git`.
 - Entre na pasta do repositório que você acabou de clonar:
-  - `sd-0x-restaurant-orders`
+  - `sd-02-restaurant-orders`
 
 2. Crie o ambiente virtual para o projeto
 
@@ -424,7 +424,7 @@ Para sinalizar que o seu projeto está pronto para o _"Code Review"_ dos seus co
 
   - No menu à direita, clique no _link_ **"Assignees"** e escolha **o seu usuário**;
 
-  - No menu à direita, clique no _link_ **"Reviewers"** e digite `students`, selecione o time `tryber/students-sd-0x`.
+  - No menu à direita, clique no _link_ **"Reviewers"** e digite `students`, selecione o time `tryber/students-sd-02`.
 
 Caso tenha alguma dúvida, [aqui tem um video explicativo](https://vimeo.com/362189205).
 
