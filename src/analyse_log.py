@@ -35,37 +35,27 @@ def most_type_food(food, data):
 
 def never_requested_meal(data):
     all_meals = {
-        'hamburguer': 0,
-        'pizza': 0,
-        'coxinha': 0,
-        'misto-quente': 0,
+        'hamburguer',
+        'pizza',
+        'coxinha',
+        'misto-quente',
     }
-    meals = set()
-    for meal in data:
-        all_meals[meal] += 1
-    for not_meals, count in all_meals.items():
-        if (count == 0):
-            meals.add(not_meals)
-    return meals
+    meals = set(data)
+    return all_meals.difference(meals)
 
 
 def days_that_wasnt_in_place(data):
-    days = {
-        'segunda-feira': 0,
-        'terça-feira': 0,
-        'quarta-feira': 0,
-        'quinta-feira': 0,
-        'sexta-feira': 0,
-        'sabado': 0,
-        'domingo': 0,
+    all_days = {
+        'segunda-feira',
+        'terça-feira',
+        'quarta-feira',
+        'quinta-feira',
+        'sexta-feira',
+        'sabado',
+        'domingo',
     }
-    not_days = set()
-    for day in data:
-        days[day] += 1
-    for day, count in days.items():
-        if(count == 0):
-            not_days.add(day)
-    return not_days
+    cur_days = set(data)
+    return all_days.difference(cur_days)
 
 
 def import_csv(path_to_file):
@@ -75,14 +65,14 @@ def import_csv(path_to_file):
     resp = {}
     with open(path_to_file) as file:
         data = csv.reader(file, delimiter=",")
-        for values in data:
-            if(values[0] not in resp):
-                resp[values[0]] = {
+        for name, food, day in data:
+            if(name not in resp):
+                resp[name] = {
                     'Foods': [],
                     'Days': [],
                 }
-            resp[values[0]]['Foods'].append(values[1])
-            resp[values[0]]['Days'].append(values[2])
+            resp[name]['Foods'].append(food)
+            resp[name]['Days'].append(day)
     return resp
 
 

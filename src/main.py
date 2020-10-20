@@ -1,24 +1,26 @@
 import csv
 from pubsub import pub
-from inventory_control import InventoryControl
+# from inventory_control import InventoryControl
 from track_orders import TrackOrders
 
 
-def print_info(tracker, control):
+def print_info(tracker):
     print(tracker.get_most_ordered_dish_per_costumer('maria'))
     print(tracker.get_order_frequency_per_costumer('arnaldo', 'hamburguer'))
     print(tracker.get_never_ordered_per_costumer('joao'))
     print(tracker.get_days_never_visited_per_costumer('joao'))
-    print(control.get_quantities_to_buy())
+    print(tracker.get_busiest_day())
+    print(tracker.get_least_busy_day())
+    # print(control.get_quantities_to_buy())
 
 
 def main():
     topic = 'order'
-    path = ""
+    path = "data/orders_2.csv"
 
     tracker = TrackOrders()
-    control = StockControl()
-    subs = [tracker.add_new_order, control.add_new_order]
+    # control = StockControl()
+    subs = [tracker.add_new_order]
 
     for sub in subs:
         pub.subscribe(sub, topic)
@@ -28,7 +30,7 @@ def main():
         for costumer, order, day in csv_reader:
             pub.sendMessage(topic, costumer=costumer, order=order, day=day)
 
-    print_info(tracker, control)
+    print_info(tracker)
 
 
 if __name__ == "__main__":
