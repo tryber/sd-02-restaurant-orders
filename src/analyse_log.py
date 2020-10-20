@@ -1,4 +1,15 @@
 import csv
+import os
+
+
+def check_path_and_format(file_name, file_ext):
+    if not os.path.exists(file_name):
+        print(f"Arquivo {file_name} não econtrado")
+        return True
+    if not file_name.endswith(file_ext):
+        print("Formato inválido")
+        return True
+    return False
 
 
 def most_requested_food(data):
@@ -58,6 +69,8 @@ def days_that_wasnt_in_place(data):
 
 
 def import_csv(path_to_file):
+    if(check_path_and_format(path_to_file, '.csv')):
+        return True
     data = ''
     resp = {}
     with open(path_to_file) as file:
@@ -75,6 +88,8 @@ def import_csv(path_to_file):
 
 def analyse_log(path_to_file):
     resp = import_csv(path_to_file)
+    if(resp is True):
+        return True
     with open('output.txt', 'w+') as file:
         file.write(f"{most_requested_food(resp['maria'])}\n")
         file.write(
