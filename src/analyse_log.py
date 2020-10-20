@@ -14,8 +14,8 @@ def check_path_and_format(file_name, file_ext):
 
 def most_requested_food(data):
     dict_resp = {}
-    most_frequent = data['Foods'][0]
-    for values in data['Foods']:
+    most_frequent = data['Orders'][0]
+    for values in data['Orders']:
         if(values not in dict_resp):
             dict_resp[values] = 1
         else:
@@ -33,27 +33,12 @@ def most_type_food(food, data):
     return count_food
 
 
-def never_requested_meal(data):
-    all_meals = {
-        'hamburguer',
-        'pizza',
-        'coxinha',
-        'misto-quente',
-    }
+def never_requested_meal(all_meals, data):
     meals = set(data)
     return all_meals.difference(meals)
 
 
-def days_that_wasnt_in_place(data):
-    all_days = {
-        'segunda-feira',
-        'terça-feira',
-        'quarta-feira',
-        'quinta-feira',
-        'sexta-feira',
-        'sabado',
-        'domingo',
-    }
+def days_that_wasnt_in_place(all_days, data):
     cur_days = set(data)
     return all_days.difference(cur_days)
 
@@ -61,31 +46,39 @@ def days_that_wasnt_in_place(data):
 def import_csv(path_to_file):
     if(check_path_and_format(path_to_file, '.csv')):
         return True
+    all_days = set()
+    all_meals = set()
     data = ''
     resp = {}
     with open(path_to_file) as file:
         data = csv.reader(file, delimiter=",")
-        for name, food, day in data:
-            if(name not in resp):
-                resp[name] = {
-                    'Foods': [],
+        for customer, order, day in data:
+            if(customer not in resp):
+                resp[customer] = {
+                    'Orders': [],
                     'Days': [],
                 }
-            resp[name]['Foods'].append(food)
-            resp[name]['Days'].append(day)
-    return resp
+            resp[customer]['Orders'].append(order)
+            resp[customer]['Days'].append(day)
+            all_days.add(day)
+            all_meals.add(order)
+    return resp, all_days, all_meals
 
 
 def analyse_log(path_to_file):
-    resp = import_csv(path_to_file)
+    resp, all_days, all_meals = import_csv(path_to_file)
     if(resp is True):
         return True
     with open('output.txt', 'w+') as file:
         file.write(f"{most_requested_food(resp['maria'])}\n")
         file.write(
-            f"{most_type_food('hamburguer', resp['arnaldo']['Foods'])}\n")
-        file.write(f"{never_requested_meal(resp['joao']['Foods'])}\n")
-        file.write(f"{days_that_wasnt_in_place(resp['joao']['Days'])}")
+            f"{most_type_food('hamburguer', resp['arnaldo']['Orders'])}\n")
+        file.write(
+            f"{never_requested_meal(all_meals, resp['joao']['Orders'])}\n"
+            )
+        file.write(
+            f"{days_that_wasnt_in_place(all_days, resp['joao']['Days'])}"
+            )
 
 
 analyse_log('data/orders_1.csv')
