@@ -14,10 +14,10 @@ def print_info(tracker, control):
 
 def main():
     topic = 'order'
-    path = ""
+    path = "data/orders_2.csv"
 
     tracker = TrackOrders()
-    control = StockControl()
+    control = InventoryControl()
     subs = [tracker.add_new_order, control.add_new_order]
 
     for sub in subs:
