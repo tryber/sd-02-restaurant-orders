@@ -70,8 +70,8 @@ def test_food_most_eaten_by_if_return_correct():
 
 
 def test_times_most_eaten_by_if_return_correct():
-    result = times_most_eaten('arnaldo', 'hamburguer', csv_parsed)
-    assert 0 == result
+    result = times_most_eaten('maria', 'hamburguer', csv_parsed)
+    assert 3 == result
 
 
 def test_items_that_was_not_asked_if_return_correct():

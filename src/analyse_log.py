@@ -68,5 +68,5 @@ def analyse_log(path_to_file):
     save_log([line_1, line_2, line_3, line_4])
 
 
-if __name__ == '__main__':
-    analyse_log('./data/orders_1.csv')
+# if __name__ == '__main__':
+#    analyse_log('./data/orders_1.csv')
