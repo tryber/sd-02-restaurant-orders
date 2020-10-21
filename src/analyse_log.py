@@ -13,16 +13,20 @@ def read_csv(path_to_file):
 def food_most_eaten_by(customer, data):
     food_count = {}
     most_frequent = ''
-    for line in data:
-        if line[0] == customer:
+    for line_customer, line_food, not_used in data:
+        if line_customer == customer:
             if (most_frequent == ''):
-                most_frequent = line[1]
-            if line[1] in food_count:
-                food_count[line[1]] += 1
-            else:
-                food_count[line[1]] = 1
-            if food_count[line[1]] > food_count[most_frequent]:
-                most_frequent = line[1]
+                most_frequent = line_food
+            # Diminuindo complexidade -- OLD
+            # if line_food in food_count:
+            #     food_count[line_food] += 1
+            # else:
+            #     food_count[line_food] = 1
+            # Diminuindo complexidade -- NEW
+            food_count[line_food] = food_count.get(line_food, 0) + 1
+            #
+            if food_count[line_food] > food_count[most_frequent]:
+                most_frequent = line_food
     return most_frequent
 
 
