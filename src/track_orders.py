@@ -1,10 +1,3 @@
-from analyse_log import (
-    most_frequent_order,
-    times_specific_order,
-    not_asked_order,
-    days_not_gone,
-)
-
 all_days = {
     "sabado",
     "segunda-feira",
@@ -44,19 +37,17 @@ class TrackOrders:
                 self.list_orders[costumer]["Food most Frequent"] = order
 
     def get_most_ordered_dish_per_costumer(self, costumer):
-        return most_frequent_order(self.list_orders, costumer)
+        return self.list_orders[costumer]["Food most Frequent"]
 
     def get_order_frequency_per_costumer(self, costumer, order):
-        return times_specific_order(self.list_orders, costumer, order)
-
-    def get_never_ordered_per_costumer(self, costumer):
-        return not_asked_order(
-            self.list_orders, costumer, self.orders_possible
+        return (
+            self.list_orders[costumer][order]
+            if order in self.list_orders[costumer]
+            else 0
         )
 
-    def get_days_never_visited_per_costumer(self, costumer):
-        return days_not_gone(self.list_orders, costumer, all_days)
+    def get_never_ordered_per_costumer(self, costumer):
+        return self.orders_possible - self.list_orders[costumer].keys()
 
-    def print_orders(self):
-        print(self.list_orders)
-        print(self.orders_possible)
+    def get_days_never_visited_per_costumer(self, costumer):
+        return all_days - self.list_orders[costumer]["days"]
