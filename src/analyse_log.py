@@ -90,5 +90,3 @@ def analyse_log(path_to_file):
 
         write_resposta(clients, path_to_file, all_orders, all_week_days)
 
-
-analyse_log('./resposta.txt')
