@@ -15,7 +15,7 @@ def analyse_log(path_to_file):
 
 
 def get_orders_from_csv_file(path_to_file):
-    with open(path_to_file) as file:
+    with open(path_to_file, mode="r") as file:
         data = csv.reader(file, delimiter=",", quotechar='"')
 
         orders = []
