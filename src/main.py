@@ -9,12 +9,15 @@ def print_info(tracker, control):
     print(tracker.get_order_frequency_per_costumer('arnaldo', 'hamburguer'))
     print(tracker.get_never_ordered_per_costumer('joao'))
     print(tracker.get_days_never_visited_per_costumer('joao'))
-    print(control.get_quantities_to_buy())
+    print(tracker.get_busiest_day())
+    print(tracker.get_least_busy_day())
+    # Comentado por ser parte do bônus
+    # print(control.get_quantities_to_buy())
 
 
 def main():
     topic = 'order'
-    path = ""
+    path = "data/orders_1.csv"
 
     tracker = TrackOrders()
     control = InventoryControl()
