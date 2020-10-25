@@ -2,64 +2,96 @@ import csv
 
 
 def analyse_log(path_to_file):
+    orders = get_orders_from_csv_file(path_to_file)
+
+    results = [
+        get_most_ordered_dish_maria(orders),
+        get_hamburguer_quantity_arnaldo(orders),
+        get_never_ordered_joao(orders),
+        get_days_never_visited_joao(orders),
+    ]
+
+    write_new_file(results)
+
+
+def get_orders_from_csv_file(path_to_file):
     with open(path_to_file) as file:
         data = csv.reader(file, delimiter=",", quotechar='"')
 
         orders = []
         for row in data:
             orders.append({
-                "cliente": row[0],
-                "prato": row[1],
-                "dia": row[2],
+                "costumer": row[0],
+                "dish": row[1],
+                "day": row[2],
             })
 
-    pratos_maria = [
-        order["prato"]
-        for order in orders
-        if order["cliente"] == "maria"
-    ]
+    return orders
 
-    quantidade_por_prato_maria = {}
-    for prato in pratos_maria:
-        if prato not in quantidade_por_prato_maria:
-            quantidade_por_prato_maria[prato] = 1
+
+def get_most_ordered_dish_maria(orders):
+    quantity_per_dish = {}
+    greatest_quantity = 0
+
+    for order in orders:
+        costumer = order["costumer"]
+        dish = order["dish"]
+
+        if costumer != "maria":
+            pass
+
+        if dish not in quantity_per_dish:
+            quantity_per_dish[dish] = 1
         else:
-            quantidade_por_prato_maria[prato] += 1
+            quantity_per_dish[dish] += 1
 
-    maior_quantidade = 0
-    mais_pedido_por_maria = ""
-    for key, value in quantidade_por_prato_maria.items():
-        if value > maior_quantidade:
-            maior_quantidade = value
-            mais_pedido_por_maria = key
+        current_quantity = quantity_per_dish[dish]
+        if current_quantity > greatest_quantity:
+            greatest_quantity = current_quantity
+            most_ordered_dish = dish
 
-    quantidade_hamburguer_arnaldo = len([
+    return most_ordered_dish
+
+
+def get_hamburguer_quantity_arnaldo(orders):
+    return len([
         order
         for order in orders
-        if order["cliente"] == "arnaldo" and order["prato"] == "hamburguer"
+        if order["costumer"] == "arnaldo" and order["dish"] == "hamburguer"
     ])
 
-    conjunto_pratos_joao = set([
-        order["prato"]
-        for order in orders
-    ])
+
+def get_never_ordered_joao(orders):
+    all_dishes = set()
+    dishes_joao = set()
+
     for order in orders:
-        if order["cliente"] == "joao":
-            conjunto_pratos_joao.discard(order["prato"])
+        dish = order["dish"]
 
-    conjunto_dias_joao = set([
-        order["dia"]
-        for order in orders
-    ])
+        all_dishes.add(dish)
+
+        if order["costumer"] == "joao":
+            dishes_joao.add(dish)
+
+    return all_dishes - dishes_joao
+
+
+def get_days_never_visited_joao(orders):
+    all_days = set()
+    days_joao = set()
+
     for order in orders:
-        if order["cliente"] == "joao":
-            conjunto_dias_joao.discard(order["dia"])
+        day = order["day"]
 
+        all_days.add(day)
+
+        if order["costumer"] == "joao":
+            days_joao.add(day)
+
+    return all_days - days_joao
+
+
+def write_new_file(lines):
     with open("data/mkt_campaign.txt", mode="w") as new_file:
-        new_file.write(f"{mais_pedido_por_maria}\n")
-        new_file.write(f"{quantidade_hamburguer_arnaldo}\n")
-        new_file.write(f"{conjunto_pratos_joao}\n")
-        new_file.write(f"{conjunto_dias_joao}\n")
-
-
-analyse_log("data/orders_1.csv")
+        for line in lines:
+            new_file.write(f"{line}\n")
