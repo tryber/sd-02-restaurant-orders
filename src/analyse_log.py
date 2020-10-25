@@ -16,7 +16,7 @@ def analyse_log(path_to_file):
 
 def get_orders_from_csv_file(path_to_file):
     with open(path_to_file, mode="r") as file:
-        data = csv.reader(file, delimiter=",", quotechar='"')
+        data = list(csv.reader(file.readlines(), delimiter=",", quotechar='"'))
 
         orders = []
         for row in data:
@@ -91,7 +91,11 @@ def get_days_never_visited_joao(orders):
     return all_days - days_joao
 
 
-def write_new_file(lines):
+def write_new_file(results):
     with open("data/mkt_campaign.txt", mode="w") as new_file:
-        for line in lines:
-            new_file.write(f"{line}\n")
+        lines = [
+            f"{str(result)}\n"
+            for result in results
+        ]
+
+        new_file.writelines(lines)
