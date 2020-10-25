@@ -17,7 +17,7 @@ def main():
     path = ""
 
     tracker = TrackOrders()
-    control = StockControl()
+    control = InventoryControl()
     subs = [tracker.add_new_order, control.add_new_order]
 
     for sub in subs:
