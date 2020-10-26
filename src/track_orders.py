@@ -1,4 +1,4 @@
-from analyse_log import format_dict, mais_pedido, dias_pratos
+from src.analyse_log import format_dict, mais_pedido, dias_pratos
 
 
 class TrackOrders:
