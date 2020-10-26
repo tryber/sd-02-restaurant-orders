@@ -23,8 +23,11 @@ def format_dict(dict_values):
 def mais_pedido(iterator, keys):
     final_value = {"valor": "", "contagem": 0}
     for item in keys:
-        if iterator[item] > final_value["contagem"]:
-            final_value = {"valor": item, "contagem": iterator[item]}
+        try:
+            if iterator[item] > final_value["contagem"]:
+                final_value = {"valor": item, "contagem": iterator[item]}
+        except KeyError:
+            next
     return final_value["valor"]
 
 
@@ -35,8 +38,11 @@ def comida_por_pessoa(iterator, key):
 def dias_pratos(iterator, keys):
     final_value = set()
     for item in list(keys):
-        if iterator[item] == 0:
-            final_value.add(item)
+        try:
+            if iterator[item] == 0:
+                final_value.add(item)
+        except KeyError:
+            next
     return str(final_value)
 
 
