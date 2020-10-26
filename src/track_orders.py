@@ -1,6 +1,6 @@
 class TrackOrders:
-    def __init__(self):
-        self.orders = []
+    def __init__(self, orders=[]):
+        self.orders = orders
 
     def add_new_order(self, costumer, order, day):
         self.orders.append({
