@@ -1,11 +1,7 @@
 import csv
-import os
 
 
 def check_path_and_format(file_name, file_ext):
-    if not os.path.exists(file_name):
-        print(f"Arquivo {file_name} não econtrado")
-        return True
     if not file_name.endswith(file_ext):
         print("Formato inválido")
         return True
@@ -79,6 +75,3 @@ def analyse_log(path_to_file):
         file.write(
             f"{days_that_wasnt_in_place(all_days, resp['joao']['Days'])}"
             )
-
-
-analyse_log('data/orders_1.csv')
