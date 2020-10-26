@@ -9,7 +9,7 @@ expect_infos = [
 ]
 
 expect_format_orders = {
-     "joao": ({"terça-feira": 1, "hamburguer": 1}),
+    "joao": ({"terça-feira": 1, "hamburguer": 1}),
     "maria": (
         {
             "terça-feira": 2,
@@ -22,7 +22,7 @@ expect_format_orders = {
 
 expect_value_keys = {
     "days": {"segunda-feira", "terça-feira"},
-    "ingredients": { "hamburguer", "pizza"},
+    "ingredients": {"hamburguer", "pizza"},
     "names": {"joao", "maria"},
 }
 
@@ -40,26 +40,20 @@ def test_add_new_order():
 
 
 def test_get_most_ordered_dish_per_costumer():
-    assert track_test.get_most_ordered_dish_per_costumer(
-      'maria'
-      ) == 'pizza'
+    assert track_test.get_most_ordered_dish_per_costumer("maria") == "pizza"
 
 
 def test_get_dish_quantity_per_costumer():
-    assert track_test.get_dish_quantity_per_costumer(
-      'maria', 'pizza'
-      ) == 2
+    assert track_test.get_dish_quantity_per_costumer("maria", "pizza") == 2
 
 
 def test_get_never_ordered_per_costumer():
-    assert track_test.get_never_ordered_per_costumer(
-      'joao'
-      ) == "{'pizza'}"
+    assert track_test.get_never_ordered_per_costumer("joao") == "{'pizza'}"
 
 
 def test_get_busiest_day():
-    assert track_test.get_busiest_day() == 'terça-feira'
+    assert track_test.get_busiest_day() == "terça-feira"
 
 
 def test_get_least_busy_day():
-    assert track_test.get_least_busy_day() == 'segunda-feira'
+    assert track_test.get_least_busy_day() == "segunda-feira"

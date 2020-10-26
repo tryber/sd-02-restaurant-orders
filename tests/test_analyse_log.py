@@ -1,11 +1,8 @@
-import csv
 from src.analyse_log import (
     format_dict,
     mais_pedido,
     comida_por_pessoa,
-    analyse_log,
 )
-from unittest.mock import patch, mock_open
 
 csv_mock = [
     {"name": "maria", "ingredient": "hamburguer", "day": "terça-feira"},
@@ -27,7 +24,7 @@ expect_format_dict = {
 }
 expect_valid_keys = {
     "days": {"segunda-feira", "terça-feira"},
-    "ingredients": { "hamburguer", "pizza"},
+    "ingredients": {"hamburguer", "pizza"},
     "names": {"joao", "maria"},
 }
 
@@ -40,23 +37,19 @@ def test_format_dict():
 
 def test_mais_pedido():
     assert (
-        mais_pedido(expect_format_dict["joao"], expect_valid_keys["ingredients"])
+        mais_pedido(
+            expect_format_dict["joao"], expect_valid_keys["ingredients"]
+            )
         == "hamburguer"
     )
     assert (
-        mais_pedido(expect_format_dict["maria"], expect_valid_keys["ingredients"])
+        mais_pedido(
+            expect_format_dict["maria"], expect_valid_keys["ingredients"]
+            )
         == "pizza"
     )
 
 
 def test_comida_por_pessoa():
-    assert comida_por_pessoa(
-       expect_format_dict["maria"],
-       'pizza'
-    ) == '2'
-    assert comida_por_pessoa(
-       expect_format_dict["joao"],
-       'hamburguer'
-    ) == '1'
-
-
+    assert comida_por_pessoa(expect_format_dict["maria"], "pizza") == "2"
+    assert comida_por_pessoa(expect_format_dict["joao"], "hamburguer") == "1"
