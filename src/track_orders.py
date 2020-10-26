@@ -1,4 +1,4 @@
-from analyse_log import (
+from src.analyse_log import (
     most_requested_food,
     most_type_food,
     never_requested_meal,
