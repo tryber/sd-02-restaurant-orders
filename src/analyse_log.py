@@ -59,6 +59,31 @@ def joao_orders(file):
     return requests.difference(joao_delivered)
 
 
+def joao_not_in_days(file):
+    all_orders = open_orders(file)
+    requests = set()
+    joao_days = set()
+
+    for order in all_orders:
+        if order["day"] not in requests:
+            requests.add(order["day"])
+    
+    for order in all_orders:
+        if order["client"] == "joao":
+            joao_days.add(order["day"])
+    return requests.difference(joao_days)
+
+
+def write_document(data_to_write):
+    with open("data/mkt_campaign.txt", mode="w") as new_file:
+        row = [
+            f"{str(line)}\n"
+            for line in data_to_write
+        ]
+
+        new_file.writelines(row)
+
+
 def analyse_log(path_to_file):
     exist = path.exists(path_to_file) or path.exists(f"./{path_to_file}")
 
@@ -73,8 +98,9 @@ def analyse_log(path_to_file):
         maria_orders(path_to_file),
         arnaldo_orders(path_to_file),
         joao_orders(path_to_file),
+        joao_not_in_days(path_to_file),
     ]
-    return organized_orders
+    return write_document(organized_orders)
 
 
-print(analyse_log("./data/orders_1.csv"))
+analyse_log("./data/orders_1.csv")
