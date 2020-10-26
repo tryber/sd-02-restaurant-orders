@@ -28,18 +28,19 @@ def mais_pedido(iterator, keys):
     return final_value["valor"]
 
 
+def comida_por_pessoa(iterator, key):
+    return str(iterator[key])
+
+
+def dias_pratos(iterator, keys):
+    final_value = set()
+    for item in list(keys):
+        if iterator[item] == 0:
+            final_value.add(item)
+    return str(final_value)
+
+
 def analyse_log(path_to_file):
-
-    def comida_por_pessoa(iterator, key):
-        return str(iterator[key])
-
-    def dias_pratos(iterator, keys):
-        final_value = set()
-        for item in list(keys):
-            if iterator[item] == 0:
-                final_value.add(item)
-        return str(final_value)
-
     with open(path_to_file) as csv_file:
         csv_reader = csv.DictReader(
             csv_file, delimiter=",", fieldnames=["name", "ingredient", "day"]
