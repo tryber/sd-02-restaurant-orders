@@ -1,3 +1,40 @@
-from src.analyse_log import analyse_log
+# from src.analyse_log import analyse_log
+import csv
+from pubsub import pub
+from src.inventory_control import InventoryControl
+from src.track_orders import TrackOrders
 
-analyse_log('data/orders_1.csv')
+
+def print_info(tracker, control):
+    print(tracker.get_most_ordered_dish_per_costumer('maria'))
+    print(tracker.get_order_frequency_per_costumer('arnaldo', 'hamburguer'))
+    print(tracker.get_never_ordered_per_costumer('joao'))
+    print(tracker.get_days_never_visited_per_costumer('joao'))
+    print(tracker.get_busiest_day())
+    print(tracker.get_least_busy_day())
+    print(control.get_quantities_to_buy())
+
+
+def main():
+    topic = 'order'
+    path = "data/orders_1.csv"
+
+    tracker = TrackOrders()
+    control = InventoryControl()
+    subs = [tracker.add_new_order, control.add_new_order]
+
+    for sub in subs:
+        pub.subscribe(sub, topic)
+
+    with open(path) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for costumer, order, day in csv_reader:
+            pub.sendMessage(topic, costumer=costumer, order=order, day=day)
+
+    print_info(tracker, control)
+
+
+if __name__ == "__main__":
+    main()
+
+# analyse_log('data/orders_1.csv')
