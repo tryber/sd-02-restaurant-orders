@@ -2,7 +2,20 @@ from src.analyse_log import (
     format_dict,
     mais_pedido,
     comida_por_pessoa,
+    analyse_log
 )
+from unittest.mock import patch, mock_open, call
+
+mock_data = """maria,pizza,terça-feira
+maria,hamburguer,terça-feira
+joao,hamburguer,terça-feira
+maria,coxinha,segunda-feira
+arnaldo,misto-quente,terça-feira
+jose,hamburguer,sabado
+maria,hamburguer,terça-feira
+maria,hamburguer,terça-feira
+joao,hamburguer,terça-feira
+"""
 
 csv_mock = [
     {"name": "maria", "ingredient": "hamburguer", "day": "terça-feira"},
@@ -53,3 +66,18 @@ def test_mais_pedido():
 def test_comida_por_pessoa():
     assert comida_por_pessoa(expect_format_dict["maria"], "pizza") == "2"
     assert comida_por_pessoa(expect_format_dict["joao"], "hamburguer") == "1"
+
+
+def test_full_pass_analyse_log():
+    with patch(
+        "builtins.open",
+            mock_open(read_data=mock_data)) as mock_file:
+        analyse_log(mock_file)
+        mock_file.return_value.write.assert_has_calls(
+            [
+                call("hamburguer\n"),
+                call("0\n"),
+                # call("{'pizza', 'coxinha', 'misto-quente'}\n"),
+                # call("{'segunda-feira', 'sabado'}\n")
+            ]
+        )
