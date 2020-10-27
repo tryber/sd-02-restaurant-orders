@@ -1,6 +1,6 @@
 class TrackOrders:
     def __init__(self):
-        self.all_sales = {}
+        self.all_sales = {  }
         self.days = set()
         self.orders = set()
 
@@ -21,10 +21,12 @@ class TrackOrders:
         )
 
     def get_order_frequency_per_costumer(self, costumer, order):
-        pass
+        if order in self.all_sales[costumer]["order"]:
+            return self.all_sales[costumer]["order"][order]
+        return 0
 
     def get_never_ordered_per_costumer(self, costumer):
-        pass
+        return self.orders.difference(self.all_sales[costumer]['order'])
 
     def get_days_never_visited_per_costumer(self, costumer):
-        pass
+        return self.days.difference(self.all_sales[costumer]['days'])
