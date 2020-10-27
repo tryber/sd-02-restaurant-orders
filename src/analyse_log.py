@@ -56,7 +56,7 @@ def joao_orders(file):
     for order in all_orders:
         if order["client"] == "joao":
             joao_delivered.add(order["meal"])
-    return requests.difference(joao_delivered)
+    return set(sorted(requests.difference(joao_delivered)))
 
 
 def joao_not_in_days(file):
@@ -103,4 +103,4 @@ def analyse_log(path_to_file):
     return write_document(organized_orders)
 
 
-analyse_log("./data/orders_1.csv")
+# analyse_log("./data/orders_1.csv")
