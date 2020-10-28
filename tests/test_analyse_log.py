@@ -19,7 +19,6 @@ order_by_name = {
     }
 }
 
-all_days = {"segunda-feira", "sabado", "domingo"}
 
 mocked_data = """pedro,couve,domingo
 pedro,couve,segunda-feira
@@ -81,7 +80,9 @@ def test_not_asked_order_returns_correct():
 
 
 def test_days_not_gone_returns_correct():
-    assert days_not_gone(order_by_name, "pedro", all_days) == {"domingo"}
+    assert days_not_gone(
+        order_by_name, "pedro", {"segunda-feira", "sabado", "domingo"}
+    ) == {"domingo"}
 
 
 def test_check_file_returns_correct():
