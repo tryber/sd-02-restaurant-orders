@@ -2,10 +2,6 @@ import csv
 from pubsub import pub
 from inventory_control import InventoryControl
 from track_orders import TrackOrders
-from analyse_log import analyse_log
-
-
-analyse_log('./data/orders_1.csv')
 
 
 def print_info(tracker, control):
@@ -17,11 +13,11 @@ def print_info(tracker, control):
 
 
 def main():
-    topic = 'order'
-    path = ""
+    topic = "order"
+    path = "data/orders_1.csv"
 
     tracker = TrackOrders()
-    control = StockControl()
+    control = InventoryControl()
     subs = [tracker.add_new_order, control.add_new_order]
 
     for sub in subs:
