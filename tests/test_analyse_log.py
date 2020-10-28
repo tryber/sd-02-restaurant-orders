@@ -85,12 +85,11 @@ def test_days_not_gone_returns_correct():
 
 
 def test_check_file_returns_correct():
-    with patch(
-        "builtins.open", mock_open(read_data=mocked_data)
-    ):
+    with patch("builtins.open", mock_open(read_data=mocked_data)):
         assert check_file("Qualquer_coisa.csv") == (
             adjusted_data,
             {"abacate", "couve", "coxinha", "hamburguer"},
+            {"domingo", "segunda-feira"},
         )
 
 
@@ -104,6 +103,7 @@ def test_analyse_log_line1():
                 "couve",
                 "coxinha",
             },
+            {"domingo", "segunda-feira"},
         ),
     ), patch("builtins.open", mock_open()) as mock_write:
         analyse_log("arquivo1.csv", "arquivo2.txt")
@@ -113,7 +113,11 @@ def test_analyse_log_line1():
 def test_analyse_log_line2():
     with patch(
         "src.analyse_log.check_file",
-        return_value=(adjusted_data, {"abacate", "couve", "coxinha"}),
+        return_value=(
+            adjusted_data,
+            {"abacate", "couve", "coxinha"},
+            {"domingo", "segunda-feira"},
+        ),
     ), patch("builtins.open", mock_open()) as mock_write:
         analyse_log("arquivo1.csv", "arquivo2.txt")
         mock_write.return_value.write.assert_any_call("1\n")

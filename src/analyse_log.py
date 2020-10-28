@@ -1,28 +1,22 @@
 import csv
 
 
-all_days = {
-    "sabado",
-    "segunda-feira",
-    "terça-feira",
-}
-
-
 def check_file(path_to_file):
     with open(path_to_file, mode="r") as csv_file:
         csvLines = csv.reader(csv_file, delimiter=",")
         orders = set()
+        all_days = set()
         order_by_client = {}
         for name, food, day in csvLines:
+            orders.add(food)
+            all_days.add(day)
             if name not in order_by_client:
                 order_by_client[name] = {}
                 order_by_client[name]["days"] = {day}
                 order_by_client[name][food] = 1
                 order_by_client[name]["Most Frequent Value"] = 1
                 order_by_client[name]["Food most Frequent"] = food
-                orders.add(food)
             else:
-                orders.add(food)
                 order_by_client[name]["days"].add(day)
 
                 if food in order_by_client[name]:
@@ -38,7 +32,7 @@ def check_file(path_to_file):
                         "Most Frequent Value"
                     ] = order_by_client[name][food]
                     order_by_client[name]["Food most Frequent"] = food
-        return order_by_client, orders
+        return order_by_client, orders, all_days
 
 
 def most_frequent_order(order_by_client, name):
@@ -58,7 +52,7 @@ def days_not_gone(order_by_client, name, all_days):
 
 
 def analyse_log(path_file, path_to_write):
-    order_by_client, orders = check_file(path_file)
+    order_by_client, orders, all_days = check_file(path_file)
     line1 = most_frequent_order(order_by_client, "maria")
     line2 = times_specific_order(order_by_client, "arnaldo", "hamburguer")
     line3 = not_asked_order(order_by_client, "joao", orders)

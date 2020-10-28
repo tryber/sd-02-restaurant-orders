@@ -76,7 +76,6 @@ def test_get_days_never_visited_per_costumer_return_correct():
     track.add_new_order("pedro", "hamburguer", "domingo")
     track.add_new_order("isabela", "hamburguer", "segunda")
     assert track.get_days_never_visited_per_costumer("isabela") == {
-        "segunda-feira",
-        "terça-feira",
+        "domingo",
         "sabado",
     }

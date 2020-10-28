@@ -1,25 +1,19 @@
-all_days = {
-    "sabado",
-    "segunda-feira",
-    "terça-feira",
-}
-
-
 class TrackOrders:
     def __init__(self):
         self.list_orders = {}
         self.orders_possible = set()
+        self.all_days = set()
 
     def add_new_order(self, costumer, order, day):
+        self.orders_possible.add(order)
+        self.all_days.add(day)
         if costumer not in self.list_orders:
             self.list_orders[costumer] = {}
             self.list_orders[costumer]["days"] = {day}
             self.list_orders[costumer][order] = 1
             self.list_orders[costumer]["Most Frequent Value"] = 1
             self.list_orders[costumer]["Food most Frequent"] = order
-            self.orders_possible.add(order)
         else:
-            self.orders_possible.add(order)
             self.list_orders[costumer]["days"].add(day)
 
             if order in self.list_orders[costumer]:
@@ -50,4 +44,4 @@ class TrackOrders:
         return self.orders_possible - self.list_orders[costumer].keys()
 
     def get_days_never_visited_per_costumer(self, costumer):
-        return all_days - self.list_orders[costumer]["days"]
+        return self.all_days - self.list_orders[costumer]["days"]
