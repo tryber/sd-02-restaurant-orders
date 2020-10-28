@@ -1,6 +1,6 @@
 class TrackOrders:
     def __init__(self):
-        self.all_sales = {  }
+        self.all_sales = {}
         self.days = set()
         self.orders = set()
 

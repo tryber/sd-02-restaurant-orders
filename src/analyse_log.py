@@ -8,11 +8,11 @@ def open_orders(file):
 
     with open(file, "r") as csv_orders:
         orders = csv.reader(csv_orders, delimiter=",")
-        for order in orders:
+        for client, meal, day in orders:
             orders_list.append({
-                "client": order[0],
-                "meal": order[1],
-                "day": order[2],
+                "client": client,
+                "meal": meal,
+                "day": day,
             })
     return orders_list
 
@@ -52,7 +52,7 @@ def joao_orders(file):
     for order in all_orders:
         if order["meal"] not in requests:
             requests.add(order["meal"])
-    
+
     for order in all_orders:
         if order["client"] == "joao":
             joao_delivered.add(order["meal"])
@@ -67,21 +67,17 @@ def joao_not_in_days(file):
     for order in all_orders:
         if order["day"] not in requests:
             requests.add(order["day"])
-    
+
     for order in all_orders:
         if order["client"] == "joao":
             joao_days.add(order["day"])
-    return requests.difference(joao_days)
+    return set(sorted(requests.difference(joao_days)))
 
 
 def write_document(data_to_write):
     with open("data/mkt_campaign.txt", mode="w") as new_file:
-        row = [
-            f"{str(line)}\n"
-            for line in data_to_write
-        ]
-
-        new_file.writelines(row)
+        for line in data_to_write:
+            new_file.write(f"{line}\n")
 
 
 def analyse_log(path_to_file):
