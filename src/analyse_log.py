@@ -8,6 +8,8 @@ def get_most_ordered_dish_per_costumer(orders, costumer):
         for order in orders
         if order["cliente"] == costumer
     }
+    if not len(maria_orders):
+        return ""
     return max(maria_orders, key=maria_orders.get)
 
 
@@ -18,7 +20,7 @@ def get_order_frequency_per_costumer(orders, costumer, order):
         if item["pedido"] == order and item["cliente"] == costumer
     }
     if not orders_count:
-        return "0"
+        return int()
     return orders_count[order]
 
 
@@ -49,6 +51,7 @@ def analyse_log(path_to_file):
     except FileNotFoundError:
         print(f"Arquivo {path_to_file} não encontrado", file=sys.stderr)
     else:
+        print(all_orders)
         most_ordered_by_maria = get_most_ordered_dish_per_costumer(
             all_orders, "maria"
         )
