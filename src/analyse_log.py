@@ -46,9 +46,7 @@ def days_never_visited(list, name):
             days_set.remove(order["dia"])
     return days_set
     
-
-
-def analyse_log(csv_file):
+def create_orders_log(csv_file):
     with open(csv_file, encoding="utf8", mode="r") as file:
         if not csv_file.endswith(".csv"):
             print("Formato inválido", file=sys.stderr)
@@ -61,21 +59,28 @@ def analyse_log(csv_file):
         read_csv = csv.DictReader(file, fieldnames=fieldnames)
         for line in read_csv:
             orders_log.append(line)
+        return orders_log
 
-        all_results = [
-            most_ordered_meal(orders_log, "maria"),
-            meals_from_customer(orders_log, "arnaldo", "hamburguer"),
-            meals_never_asked(orders_log, "joao"),
-            days_never_visited(orders_log, "joao")
+
+def write_file(txt_file, list_results):
+    with open(txt_file, mode="w") as new_file:
+        lines = [
+            f"{str(result)}\n"
+            for result in list_results
         ]
 
-        with open("data/mkt_campaign.txt", mode="w") as new_file:
-            lines = [
-                f"{str(result)}\n"
-                for result in all_results
-            ]
+        new_file.writelines(lines)
 
-            new_file.writelines(lines)
+def analyse_log(csv_file):
+    orders_log = create_orders_log(csv_file)
+    all_results = [
+        most_ordered_meal(orders_log, "maria"),
+        meals_from_customer(orders_log, "arnaldo", "hamburguer"),
+        meals_never_asked(orders_log, "joao"),
+        days_never_visited(orders_log, "joao")
+    ]
+
+    write_file("data/mkt_campaign.txt", all_results)
 
 
 print(analyse_log("data/orders_1.csv"))
