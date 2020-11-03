@@ -2,8 +2,8 @@ import csv
 import sys
 
 
-def most_ordered_meal(list, name):
-    filtered_list = [value for value in list if value["cliente"] == name]
+def most_ordered_meal(list_param, name):
+    filtered_list = [value for value in list_param if value["cliente"] == name]
     count = {}
     most_frequent = filtered_list[0]["pedido"]
     
@@ -18,34 +18,40 @@ def most_ordered_meal(list, name):
     return most_frequent
 
 
-def meals_from_customer(list, name, meal):
-    return len([list.count(list_item) for list_item in list if list_item["pedido"]== meal and list_item["cliente"] == name])
+def meals_from_customer(list_param, name, meal):
+    return len([list_param.count(list_item) for list_item in list_param if list_item["pedido"]== meal and list_item["cliente"] == name])
 
 
-def meals_never_asked(list, name):
-    filtered_list = [value for value in list if value["cliente"] == name]
-    foods_set = set()
-    for order in list:
-        foods_set.add(order["pedido"])
+def meals_never_asked(list_param, name):
+    all_dishes = set()
+    customer_dish = set()
+
+    for order in list_param:
+        dish = order["pedido"]
+
+        all_dishes.add(dish)
+
+        if order["cliente"] == name:
+            customer_dish.add(dish)
+
+    return all_dishes - customer_dish
 
 
-    for order in filtered_list:
-        if order["pedido"] in foods_set:
-            foods_set.remove(order["pedido"])
-    return foods_set
+def days_never_visited(list_param, name):
+    all_days = set()
+    customer_days = set()
 
-def days_never_visited(list, name):
-    filtered_list = [value for value in list if value["cliente"] == name]
-    days_set = set()
-    for order in list:
-        days_set.add(order["dia"])
+    for order in list_param:
+        day = order["dia"]
+
+        all_days.add(day)
+
+        if order["cliente"] == name:
+            customer_days.add(day)
+
+    return all_days - customer_days
 
 
-    for order in filtered_list:
-        if order["dia"] in days_set:
-            days_set.remove(order["dia"])
-    return days_set
-    
 def create_orders_log(csv_file):
     with open(csv_file, encoding="utf8", mode="r") as file:
         if not csv_file.endswith(".csv"):
@@ -71,6 +77,7 @@ def write_file(txt_file, list_results):
 
         new_file.writelines(lines)
 
+
 def analyse_log(csv_file):
     orders_log = create_orders_log(csv_file)
     all_results = [
@@ -80,7 +87,7 @@ def analyse_log(csv_file):
         days_never_visited(orders_log, "joao")
     ]
 
-    write_file("data/mkt_campaign.txt", all_results)
+    # write_file("data/mkt_campaign.txt", all_results)
 
 
 print(analyse_log("data/orders_1.csv"))
