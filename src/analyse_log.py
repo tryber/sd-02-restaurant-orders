@@ -1,5 +1,4 @@
 import csv
-import sys
 
 
 def most_ordered_meal(list_param, name):
@@ -55,11 +54,9 @@ def days_never_visited(list_param, name):
 def create_orders_log(csv_file):
     with open(csv_file, encoding="utf8", mode="r") as file:
         if not csv_file.endswith(".csv"):
-            print("Formato inválido", file=sys.stderr)
-            sys.exit(1)
+            return "Formato inválido"
         if not len(csv_file):
-            print("Arquivo vazio", file=sys.stderr)
-            sys.exit(1)
+            return "Arquivo vazio"
         orders_log = []
         fieldnames = ["cliente", "pedido", "dia"]
         read_csv = csv.DictReader(file, fieldnames=fieldnames)
@@ -68,8 +65,8 @@ def create_orders_log(csv_file):
         return orders_log
 
 
-def write_file(txt_file, list_results):
-    with open(txt_file, mode="w") as new_file:
+def write_file(list_results):
+    with open("data/mkt_campaign.txt", mode="w") as new_file:
         lines = [
             f"{str(result)}\n"
             for result in list_results
@@ -87,7 +84,7 @@ def analyse_log(csv_file):
         days_never_visited(orders_log, "joao")
     ]
 
-    # write_file("data/mkt_campaign.txt", all_results)
+    write_file(all_results)
 
 
 print(analyse_log("data/orders_1.csv"))
