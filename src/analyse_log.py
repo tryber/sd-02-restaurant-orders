@@ -22,18 +22,18 @@ def meals_from_customer(list_param, name, meal):
 
 
 def meals_never_asked(list_param, name):
-    all_meals = set()
-    customer_meals = set()
+    all_dishes = set()
+    dishes_joao = set()
 
     for order in list_param:
-        meal = order["pedido"]
+        dish = order["pedido"]
 
-        all_meals.add(meal)
+        all_dishes.add(dish)
 
         if order["cliente"] == name:
-            customer_meals.add(meal)
+            dishes_joao.add(dish)
 
-    return all_meals - customer_meals
+    return all_dishes - dishes_joao
 
 
 def days_never_visited(list_param, name):
@@ -53,16 +53,17 @@ def days_never_visited(list_param, name):
 
 def create_orders_log(csv_file):
     with open(csv_file, encoding="utf8", mode="r") as file:
-        if not csv_file.endswith(".csv"):
-            return "Formato inválido"
-        if not len(csv_file):
-            return "Arquivo vazio"
-        orders_log = []
-        fieldnames = ["cliente", "pedido", "dia"]
-        read_csv = csv.DictReader(file, fieldnames=fieldnames)
-        for line in read_csv:
-            orders_log.append(line)
-        return orders_log
+        data = list(csv.reader(file.readlines(), delimiter=",", quotechar='"'))
+
+        orders = []
+        for row in data:
+            orders.append({
+                "cliente": row[0],
+                "pedido": row[1],
+                "dia": row[2],
+            })
+
+    return orders
 
 
 def write_file(list_results):
@@ -87,4 +88,4 @@ def analyse_log(csv_file):
     write_file(all_results)
 
 
-print(analyse_log("data/orders_1.csv"))
+analyse_log("data/orders_1.csv")
