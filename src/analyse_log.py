@@ -8,7 +8,6 @@ def extract_orders_from_csv(orders):
         news_reader = csv.DictReader(file, fieldnames=fieldnames)
         for row in news_reader:
             all_orders.append(row)
-    print(all_orders)
     return all_orders
 
 
@@ -18,8 +17,6 @@ def get_most_ordered_dish_per_costumer(orders, costumer):
         for order in orders
         if order["cliente"] == costumer
     }
-    if not len(maria_orders):
-        return ""
     return max(maria_orders, key=maria_orders.get)
 
 

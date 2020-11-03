@@ -1,10 +1,7 @@
 import csv
 from pubsub import pub
-from inventory_control import InventoryControl
-from track_orders import TrackOrders
-from analyse_log import analyse_log
-
-analyse_log("data/orders_1.csv")
+from src.inventory_control import InventoryControl
+from src.track_orders import TrackOrders
 
 
 def print_info(tracker, control):

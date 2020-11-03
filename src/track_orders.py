@@ -1,4 +1,4 @@
-from analyse_log import (
+from src.analyse_log import (
     get_most_ordered_dish_per_costumer,
     get_order_frequency_per_costumer,
     get_never_ordered_per_costumer,

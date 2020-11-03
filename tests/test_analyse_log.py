@@ -1,4 +1,5 @@
 from unittest.mock import patch, mock_open
+from io import StringIO
 from src.analyse_log import (
     analyse_log,
     get_most_ordered_dish_per_costumer,
@@ -126,42 +127,49 @@ all_orders = [
 ]
 
 
-def test_get_most_ordered_dish_per_costumer():
-    result = get_most_ordered_dish_per_costumer(all_orders, "maria")
-    expected_result = "hamburguer"
-    assert result == expected_result
+class TestAnalyseLogSuite:
+    def test_get_most_ordered_dish_per_costumer(self):
+        result = get_most_ordered_dish_per_costumer(all_orders, "maria")
+        expected_result = "hamburguer"
+        assert result == expected_result
 
+    def test_get_order_frequency_per_costumer(self):
+        result = get_order_frequency_per_costumer(
+            all_orders, "arnaldo", "hamburguer"
+        )
+        expected_result = 0
+        assert result == expected_result
+        
+        result = get_order_frequency_per_costumer(
+            all_orders, "arnaldo", "misto-quente"
+        )
+        expected_result = 8
+        assert result == expected_result
 
-def test_get_order_frequency_per_costumer():
-    result = get_order_frequency_per_costumer(
-        all_orders, "arnaldo", "hamburguer"
-    )
-    expected_result = 0
-    assert result == expected_result
+    def test_get_never_ordered_per_costumer(self):
+        result = get_never_ordered_per_costumer(all_orders, "joao")
+        expected_result = {"pizza", "coxinha", "misto-quente"}
+        assert result == expected_result
 
+    def test_get_days_never_visited_per_costumer(self):
+        result = get_days_never_visited_per_costumer(all_orders, "joao")
+        expected_result = {"segunda-feira", "sabado"}
+        assert result == expected_result
 
-def test_get_never_ordered_per_costumer():
-    result = get_never_ordered_per_costumer(all_orders, "joao")
-    expected_result = {"pizza", "coxinha", "misto-quente"}
-    assert result == expected_result
+    def test_extract_orders_from_csv(self):
+        with patch(
+            "builtins.open", mock_open(read_data=csv_content)
+        ) as mocked_open:
+            mocked_open.return_value.__iter__ = lambda self: iter(
+                StringIO(csv_content)
+            )
+            result = extract_orders_from_csv("file.csv")
+            assert all_orders == result
 
-
-def test_get_days_never_visited_per_costumer():
-    result = get_days_never_visited_per_costumer(all_orders, "joao")
-    expected_result = {"segunda-feira", "sabado"}
-    assert result == expected_result
-
-
-def test_extract_orders_from_csv():
-    with patch("builtins.open", mock_open(read_data=csv_content)):
-        result = extract_orders_from_csv("file.csv")
-        assert all_orders == result
-
-
-def test_analyse_log():
-    with patch(
-        "src.analyse_log.extract_orders_from_csv", return_value=all_orders
-    ), patch("builtins.open", mock_open()) as file:
-        analyse_log("file.csv")
-        file.return_value.write.assert_any_call("hamburguer\n")
-        file.return_value.write.assert_any_call("0\n")
+    def test_analyse_log(self):
+        with patch(
+            "src.analyse_log.extract_orders_from_csv", return_value=all_orders
+        ), patch("builtins.open", mock_open()) as file:
+            analyse_log("file.csv")
+            file.return_value.write.assert_any_call("hamburguer\n")
+            file.return_value.write.assert_any_call("0\n")
