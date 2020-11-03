@@ -1,15 +1,14 @@
-from unittest.mock import patch, mock_open, call
-from io import StringIO
+from unittest.mock import patch, mock_open
 from src.analyse_log import (
     analyse_log,
     get_most_ordered_dish_per_costumer,
     get_order_frequency_per_costumer,
     get_never_ordered_per_costumer,
     get_days_never_visited_per_costumer,
+    extract_orders_from_csv,
 )
 
-csv_content = """
-maria,hamburguer,terça-feira
+csv_content = """maria,hamburguer,terça-feira
 joao,hamburguer,terça-feira
 maria,pizza,terça-feira
 maria,coxinha,segunda-feira
@@ -64,7 +63,8 @@ maria,pizza,terça-feira
 maria,coxinha,segunda-feira
 arnaldo,misto-quente,terça-feira
 jose,hamburguer,sabado
-maria,hamburguer,terça-feira"""
+maria,hamburguer,terça-feira
+"""
 
 all_orders = [
     {"cliente": "maria", "pedido": "hamburguer", "dia": "terça-feira"},
@@ -152,15 +152,16 @@ def test_get_days_never_visited_per_costumer():
     assert result == expected_result
 
 
+def test_extract_orders_from_csv():
+    with patch("builtins.open", mock_open(read_data=csv_content)):
+        result = extract_orders_from_csv("file.csv")
+        assert all_orders == result
+
+
 def test_analyse_log():
-    expected_lines = [
-        "hamburguer\n",
-        "0\n",
-        "{'misto-quente', 'pizza', 'coxinha'}\n",
-        "{'segunda-feira', 'sabado'}\n",
-    ]
-    with patch("builtins.open", mock_open(read_data=csv_content)) as mock_file:
-        analyse_log(mock_file)
-        mock_file.return_value.writelines.assert_called_once_with(
-            expected_lines
-        )
+    with patch(
+        "src.analyse_log.extract_orders_from_csv", return_value=all_orders
+    ), patch("builtins.open", mock_open()) as file:
+        analyse_log("file.csv")
+        file.return_value.write.assert_any_call("hamburguer\n")
+        file.return_value.write.assert_any_call("0\n")

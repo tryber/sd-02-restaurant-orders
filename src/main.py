@@ -2,6 +2,9 @@ import csv
 from pubsub import pub
 from inventory_control import InventoryControl
 from track_orders import TrackOrders
+from analyse_log import analyse_log
+
+analyse_log("data/orders_1.csv")
 
 
 def print_info(tracker, control):

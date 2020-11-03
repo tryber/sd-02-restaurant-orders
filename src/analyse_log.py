@@ -1,5 +1,15 @@
 import csv
-import sys
+
+
+def extract_orders_from_csv(orders):
+    all_orders = []
+    with open(orders, newline="") as file:
+        fieldnames = ["cliente", "pedido", "dia"]
+        news_reader = csv.DictReader(file, fieldnames=fieldnames)
+        for row in news_reader:
+            all_orders.append(row)
+    print(all_orders)
+    return all_orders
 
 
 def get_most_ordered_dish_per_costumer(orders, costumer):
@@ -41,33 +51,21 @@ def get_days_never_visited_per_costumer(orders, costumer):
 
 
 def analyse_log(path_to_file):
-    all_orders = []
-    try:
-        with open(path_to_file, newline="") as file:
-            fieldnames = ["cliente", "pedido", "dia"]
-            news_reader = csv.DictReader(file, fieldnames=fieldnames)
-            for row in news_reader:
-                all_orders.append(row)
-    except FileNotFoundError:
-        print(f"Arquivo {path_to_file} não encontrado", file=sys.stderr)
-    else:
-        most_ordered_by_maria = get_most_ordered_dish_per_costumer(
-            all_orders, "maria"
-        )
-        hambuguer_frequency_by_arnaldo = get_order_frequency_per_costumer(
-            all_orders, "arnaldo", "hamburguer"
-        )
-        never_ordered_by_joao = get_never_ordered_per_costumer(
-            all_orders, "joao"
-        )
-        days_never_visited_by_joao = get_days_never_visited_per_costumer(
-            all_orders, "joao"
-        )
-        with open("mkt_campaign.txt", "w") as file:
-            lines = [
-                f"{most_ordered_by_maria}\n",
-                f"{hambuguer_frequency_by_arnaldo}\n",
-                f"{never_ordered_by_joao}\n",
-                f"{days_never_visited_by_joao}\n",
-            ]
-            file.writelines(lines)
+    orders = extract_orders_from_csv(path_to_file)
+    most_ordered_by_maria = get_most_ordered_dish_per_costumer(orders, "maria")
+    hambuguer_frequency_by_arnaldo = get_order_frequency_per_costumer(
+        orders, "arnaldo", "hamburguer"
+    )
+    never_ordered_by_joao = get_never_ordered_per_costumer(orders, "joao")
+    days_never_visited_by_joao = get_days_never_visited_per_costumer(
+        orders, "joao"
+    )
+    with open("mkt_campaign.txt", "w") as file:
+        lines = [
+            f"{most_ordered_by_maria}\n",
+            f"{hambuguer_frequency_by_arnaldo}\n",
+            f"{never_ordered_by_joao}\n",
+            f"{days_never_visited_by_joao}\n",
+        ]
+        [file.write(line) for line in lines]
+        # file.writelines(lines)
