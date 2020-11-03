@@ -1,14 +1,5 @@
 # Crie uma suíte de testes para o método analyse_log
 # Obtenha, no mínimo, 90% de cobertura
-from src.analyse_log import (
-    most_ordered_meal,
-    meals_from_customer,
-    meals_never_asked,
-    days_never_visited,
-    create_orders_log,
-    write_file,
-    analyse_log,
-)
 from unittest.mock import (
     patch,
     mock_open,
@@ -139,3 +130,9 @@ mkt_campaign_mock = """hamburguer
 {'misto-quente', 'pizza', 'coxinha'}
 {'segunda-feira', 'sabado'}
 """
+
+# def test_read_csv_if_return_correct():
+#     mock_opened = mock_open(read_data=csv_mock)
+#     with patch("builtins.open", mock_opened):
+#         result = sys.path.create_orders_log('dummy.csv')
+#         assert orders_log_mock == result

@@ -23,18 +23,18 @@ def meals_from_customer(list_param, name, meal):
 
 
 def meals_never_asked(list_param, name):
-    all_dishes = set()
-    customer_dish = set()
+    all_meals = set()
+    customer_meals = set()
 
     for order in list_param:
-        dish = order["pedido"]
+        meal = order["pedido"]
 
-        all_dishes.add(dish)
+        all_meals.add(meal)
 
         if order["cliente"] == name:
-            customer_dish.add(dish)
+            customer_meals.add(meal)
 
-    return all_dishes - customer_dish
+    return all_meals - customer_meals
 
 
 def days_never_visited(list_param, name):
