@@ -10,9 +10,12 @@ class TrackOrders:
     def __init__(self):
         self.orders_log = []
 
-
     def add_new_order(self, costumer, order, day):
-        self.orders_log.append({"cliente": costumer, "pedido": order, "dia": day})
+        self.orders_log.append({
+            "cliente": costumer,
+            "pedido": order,
+            "dia": day
+        })
 
     def get_most_ordered_dish_per_costumer(self, costumer):
         return most_ordered_meal(self.orders_log, costumer)

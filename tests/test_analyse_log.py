@@ -3,13 +3,9 @@
 from unittest.mock import (
     patch,
     mock_open,
-    call,
 )
 
-import pytest
-
 from src.analyse_log import (
-    analyse_log,
     write_file,
     create_orders_log,
     days_never_visited,
@@ -143,6 +139,7 @@ mkt_campaign_mock = """hamburguer
 {"sabado", "segunda-feira"}
 """
 
+
 def test_create_orders_log():
     load_mock = mock_open(read_data=csv_mock)
     with patch("builtins.open", load_mock):
@@ -166,7 +163,7 @@ def test_meals_from_customer():
 # (2, {'coxinha', 'misto-quente', 'pizza'}),
 # (3, {'sabado', 'segunda-feira'})
 # ]) - iteração sobre os testes
-def test_write_file(): # se for iterar, usar (id, expected)
+def test_write_file():  # se for iterar, usar (id, expected)
     load_mock = mock_open(read_data=csv_mock)
     with patch("builtins.open", load_mock) as mocked_file:
         line_1 = most_ordered_meal(orders_log_mock, "maria")
@@ -174,7 +171,10 @@ def test_write_file(): # se for iterar, usar (id, expected)
         line_3 = meals_never_asked(orders_log_mock, "joao")
         line_4 = days_never_visited(orders_log_mock, "joao")
         write_file([line_1, line_2, line_3, line_4])
-        # assert eval(mocked_file.return_value.writelines.mock_calls[0].args[0][id]) == expected - iteração sobre os testes
+        # assert eval
+        # (mocked_file.return_value.writelines.mock_calls[0].args[0][id])
+        # == expected
+        # - iteração sobre os testes
         a, b, c, d = mocked_file.return_value.writelines.mock_calls[0].args[0]
         assert a == 'hamburguer\n'
         assert b == '0\n'

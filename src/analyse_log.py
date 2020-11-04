@@ -5,8 +5,6 @@ def most_ordered_meal(list_param, name):
     filtered_list = [value for value in list_param if value["cliente"] == name]
     count = {}
     most_frequent = filtered_list[0]["pedido"]
-    
-
     for order in filtered_list:
         if order["pedido"] not in count:
             count[order["pedido"]] = 1
@@ -18,7 +16,11 @@ def most_ordered_meal(list_param, name):
 
 
 def meals_from_customer(list_param, name, meal):
-    return len([list_param.count(list_item) for list_item in list_param if list_item["pedido"]== meal and list_item["cliente"] == name])
+    return len([
+        list_param.count(list_item)
+        for list_item in list_param
+        if list_item["pedido"] == meal and list_item["cliente"] == name
+    ])
 
 
 def meals_never_asked(list_param, name):
