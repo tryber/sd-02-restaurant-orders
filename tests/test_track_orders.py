@@ -48,7 +48,7 @@ class TestTrackOrders:
         result = (
             tracker_test
             .get_order_frequency_per_costumer("laurolyra", "strogonoff")
-            )
+        )
         expected_result = 0
         assert result == expected_result
 

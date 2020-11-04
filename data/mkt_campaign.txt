@@ -1,4 +1,4 @@
 hamburguer
 0
-{'coxinha', 'misto-quente', 'pizza'}
+{'pizza', 'coxinha', 'misto-quente'}
 {'segunda-feira', 'sabado'}
