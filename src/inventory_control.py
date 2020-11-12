@@ -17,8 +17,25 @@ class InventoryControl:
             'frango': 10,
         }
 
+        self.current_inventory = {
+            'pao': 50,
+            'hamburguer': 35,
+            'queijo': 100,
+            'molho': 30,
+            'presunto': 20,
+            'massa': 20,
+            'frango': 10,
+        }
+
     def add_new_order(self, costumer, order, day):
-        pass
+        ingredients = self.ingredients[order]
+        for ingredient in ingredients:
+            self.current_inventory[
+                ingredient] = self.current_inventory[ingredient] - 1
 
     def get_quantities_to_buy(self):
-        pass
+        report = {}
+        for ingredient in self.current_inventory:
+            report[ingredient] = self.minimum_inventory[ingredient] - \
+                self.current_inventory[ingredient]
+        return report

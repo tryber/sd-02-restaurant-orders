@@ -2,6 +2,7 @@ import csv
 from pubsub import pub
 from src.inventory_control import InventoryControl
 from src.track_orders import TrackOrders
+import sys
 
 
 def print_info(tracker, control):
@@ -12,9 +13,8 @@ def print_info(tracker, control):
     print(control.get_quantities_to_buy())
 
 
-def main():
+def main(path):
     topic = 'order'
-    path = "data/orders_1.csv"
 
     tracker = TrackOrders()
     control = InventoryControl()
@@ -32,4 +32,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    path = sys.argv[1]
+    main(path)
