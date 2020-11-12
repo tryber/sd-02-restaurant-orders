@@ -16,59 +16,14 @@
 
 ### 7 - Estoque pode acabar
 
-As campanhas de marketing atraíram muitos novos clientes para a lanchonete. Se antes os estoques mínimos eram sempre suficientes para uma semana, agora não são mais...
-
-Suponha os seguintes estoques:
-
-```md
-- Pao: 1;
-
-- Queijo: 5;
-
-- Presunto: 3.
-```
-
-Se uma pessoa pedir um misto-quente, será possível atendê-lo. Porém o pão irá acabar. Se a próxima pessoa pedir hamburguer, não será possível atendê-lo. Sua missão é implementar um código que, caso algum ingrediente acabe, todos os pratos que usam aquele ingrediente devem ser imediatamente removidos do cardápio eletrônico, evitando clientes frustrados.
 
 #### Dados
 
-O `log` a ser utilizado agora é o arquivo `data/orders_2.csv`. Não se esqueça de alterar na variável `path` do arquivo `main.py`.
 
-#### Implementação
 
-> Você fez commit do requisito de `Controle de estoque`? Se não, faça, pois agora você vai alterar o seu código!
+Na classe `InventoryControl` implemente um novo método que retorne um conjunto com todos os pratos disponíveis,
+ou seja, que ainda tem ingredientes suficientes.
 
-Na classe `InventoryControl` implemente um novo método que retorne um conjunto com todos os pratos disponíveis, ou seja, que ainda tem ingredientes suficientes.
 
-**Assinatura da função:**
-
-```python
-def get_available_dishes():
-    # retorno: um conjunto de pratos que ainda têm ingredientes disponíveis
-```
-
-Altere o arquivo `main.py`:
-
-- A cada pedido recebido, inclua uma chamada para o seu novo método;
-
-- Caso o prato que a pessoa solicitou não esteja disponível, não envie as informações do pedido para as demais classes.
-
-##### As seguintes verificações serão feitas:
-
-- Novo método, `get_available_dishes`, implementado e funcionando corretamente.
-
-- Alteração na `main.py` produzindo o efeito esperado.
-
-- As classes/métodos estão devidamente modularizadas;
-
-- Os métodos fazem uso das técnicas de `Dict` e `Set` vistos no módulo;
-
-### 8 - Teste do método `get_available_dishes()`
-
-##### As seguintes verificações serão feitas:
-
-- Testes implementados do método `get_available_dishes` com cobertura de, no mínimo, 90%;
-
-- Implemente os testes no arquivo `test_inventory_control.py`.
 
 ---

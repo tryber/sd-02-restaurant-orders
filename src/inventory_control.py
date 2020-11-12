@@ -39,3 +39,15 @@ class InventoryControl:
             report[ingredient] = self.minimum_inventory[ingredient] - \
                 self.current_inventory[ingredient]
         return report
+
+    def get_available_dishes(self):
+        orders = []
+        for order, ingredients in self.ingredients.items():
+            is_available = True
+            for ingredient in ingredients:
+                if self.current_inventory[ingredient] <= 0:
+                    is_available = False
+                    break
+            if is_available:
+                orders.append(order)
+        return orders

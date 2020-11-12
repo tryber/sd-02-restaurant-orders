@@ -11,6 +11,7 @@ def print_info(tracker, control):
     print(tracker.get_never_ordered_per_costumer('joao'))
     print(tracker.get_days_never_visited_per_costumer('joao'))
     print(control.get_quantities_to_buy())
+    print(control.get_available_dishes())
 
 
 def main(path):
@@ -26,7 +27,9 @@ def main(path):
     with open(path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for costumer, order, day in csv_reader:
-            pub.sendMessage(topic, costumer=costumer, order=order, day=day)
+            available_orders = control.get_available_dishes()
+            if order in available_orders:
+                pub.sendMessage(topic, costumer=costumer, order=order, day=day)
 
     print_info(tracker, control)
 
