@@ -1,2 +1,8 @@
-# Crie uma suíte de testes para a classe TrackOrders
-# Obtenha, no mínimo, 90% de cobertura
+from src.main import main
+from src.constants import (expected_print)
+
+
+def test_main(capsys):
+    main()
+    out, err = capsys.readouterr()
+    assert out == expected_print

@@ -6,3 +6,5 @@ path_txt = "/home/anderson.bolivar/Documents/projects/sd-02-restaurant-orders/da
 
 expected_report = "- hamburguer" + "\n" + "- 0" + "\n" + \
     "- coxinha, misto-quente, pizza" + "\n" + "- sabado, segunda-feira"
+
+expected_print = "hamburguer\n{'misto-quente': 8}\ncoxinha, misto-quente, pizza\nsabado, segunda-feira\nNone\n"

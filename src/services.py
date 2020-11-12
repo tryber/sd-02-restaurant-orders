@@ -43,6 +43,8 @@ def merge(left, right, merged):
 
     return merged
 
+# O(nlog(n))
+
 
 def sort_frequency_report(report_list):
     report_length = len(report_list)
@@ -52,6 +54,8 @@ def sort_frequency_report(report_list):
     left, right = sort_frequency_report(
         report_list[:middle]), sort_frequency_report(report_list[middle:])
     return merge(left, right, report_list.copy())
+
+# O(n + nlog(n))
 
 
 def get_frequency_report_by(field_key, field_value, compare_key, data):
@@ -66,12 +70,16 @@ def get_frequency_report_by(field_key, field_value, compare_key, data):
     frequency_report_list = list(frequency_report.items())
     return sort_frequency_report(frequency_report_list)
 
+# O(n)
+
 
 def get_fields_by(field, data):
     fields = set()
     for row in data:
         fields.add(row[field])
     return fields
+
+# O(n)
 
 
 def get_fields_related(field_key, field_value, compare_key, data):
