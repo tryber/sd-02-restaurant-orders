@@ -1,6 +1,7 @@
 from src.services import (
     csv_importer, get_frequency_report_by,
     get_fields_by, get_fields_related, export_txt)
+import os
 
 
 def get_maria_favorite_order(data):
