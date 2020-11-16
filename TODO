@@ -1,0 +1,29 @@
+# Restaurant Orders Bolivar Lindo!
+
+### ANTES DE COMEÇAR A DESENVOLVER:
+
+
+- Ambiente virtual: `python3 -m venv .venv && source .venv/bin/activate`
+
+- Dependências: `python3 -m pip install -r requirements.txt`
+
+- Caminho: export PYTHONPATH="\${PYTHONPATH}:/home/anderson.bolivar/Documents/projects/sd-02-restaurant-orders"
+
+- Estilo: `python3 -m flake8`
+
+## Requisitos bônus:
+
+
+### 7 - Estoque pode acabar
+
+
+#### Dados
+
+
+
+Na classe `InventoryControl` implemente um novo método que retorne um conjunto com todos os pratos disponíveis,
+ou seja, que ainda tem ingredientes suficientes.
+
+
+
+---
