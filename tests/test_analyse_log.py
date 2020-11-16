@@ -13,9 +13,9 @@ def test_analyse_log_file_not_exist():
 
 
 def test_analyse_log_save_file():
-    os.remove(path_txt)
     analyse_log(path_exists_csv)
     assert os.path.exists(path_txt) is True
+    os.remove(path_txt)
 
 
 def test_analyse_log_file_content():
