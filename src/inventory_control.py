@@ -33,7 +33,7 @@ class InventoryControl:
             self.current_inventory[
                 ingredient] = self.current_inventory[ingredient] - 1
 
-    def get_quantities_to_buy(self):
+    def get_shopping_list(self):
         report = {}
         for ingredient in self.current_inventory:
             report[ingredient] = self.minimum_inventory[ingredient] - \

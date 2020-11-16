@@ -14,8 +14,13 @@ class TrackOrders:
             "name", costumer, "order", self.data)[0][0]
 
     def get_order_frequency_per_costumer(self, costumer, order):
-        return dict(get_frequency_report_by(
-            "name", costumer, "order", self.data))
+        frequency = 0
+        try:
+            frequency = dict(get_frequency_report_by(
+                "name", costumer, "order", self.data))[order]
+        except(KeyError):
+            pass
+        return frequency
 
     def get_never_ordered_per_costumer(self, costumer):
         orders = get_fields_by("order", self.data)

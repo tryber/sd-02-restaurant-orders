@@ -10,7 +10,7 @@ def print_info(tracker, control):
     print(tracker.get_order_frequency_per_costumer('arnaldo', 'hamburguer'))
     print(tracker.get_never_ordered_per_costumer('joao'))
     print(tracker.get_days_never_visited_per_costumer('joao'))
-    print(control.get_quantities_to_buy())
+    print(control.get_shopping_list())
     print(control.get_available_dishes())
 
 
